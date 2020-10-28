@@ -26,5 +26,10 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
       env:
         region: eu-west-1
-      
+
+    - name: 'Test2'
+      uses: docker://604664627747.dkr.ecr.eu-west-1.amazonaws.com/dbz_kube_gitlab_runner:v1.4.0
+      with:
+        entrypoint: kubectl
+        args: version
 
