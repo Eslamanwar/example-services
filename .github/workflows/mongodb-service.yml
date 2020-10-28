@@ -1,5 +1,5 @@
-name: Mongodb Service Example
 
+name: 'test eslam'
 on:
   push:
     branches:
@@ -8,33 +8,15 @@ on:
     branches:
     - main
 
-defaults:
-  run:
-    working-directory: ./mongodb
-
 jobs:
-  container-job:
+  build:
     runs-on: [self-hosted]
 
-    # runs all of the steps inside the specified container rather than on the VM host.
-    # Because of this the network configuration changes from host based network to a container network.
-    container:
-      image:  node:10.16-jessie
-
-    services:
-      mongodb:
-        image: mongo
-        ports:
-        - 27017:27017
-
     steps:
-    - uses: actions/checkout@v1
-    - run: npm ci
-    - run: node client.js
-      env:
-        # use mongodb for the host here because we have specified a container for the job.
-        # If we were running the job on the VM this would be localhost
-        MONGODB_HOST: mongodb
-        MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
+    - uses: 'actions/checkout@v1'
 
-
+    - name: 'Test2'
+      uses: docker://604664627747.dkr.ecr.eu-west-1.amazonaws.com/dbz_kube_gitlab_runner:v1.4.0
+      with:
+        entrypoint: kubectl
+        args: version
