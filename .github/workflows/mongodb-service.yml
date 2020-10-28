@@ -14,7 +14,7 @@ defaults:
 
 jobs:
   container-job:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted]
 
     # runs all of the steps inside the specified container rather than on the VM host.
     # Because of this the network configuration changes from host based network to a container network.
@@ -37,24 +37,4 @@ jobs:
         MONGODB_HOST: mongodb
         MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }}
 
-# Runs all steps on the VM
-# The service containers will use host port binding instead of container networking so you access them via localhost rather than the service name
-  vm-job:
-    runs-on: ubuntu-latest
 
-    services:
-      mongodb:
-        image: mongo
-        ports:
-        # will assign a random free host port
-        - 27017/tcp
-
-    steps:
-    - uses: actions/checkout@v1
-    - run: npm ci
-    - run: node client.js
-      env:
-        # use localhost for the host here because we are running the job on the VM.
-        # If we were running the job on in a container this would be mongodb
-        MONGODB_HOST: localhost
-        MONGODB_PORT: ${{ job.services.mongodb.ports[27017] }} # get randomly assigned published port
