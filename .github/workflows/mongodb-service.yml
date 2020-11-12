@@ -15,18 +15,6 @@ jobs:
     steps:
     - uses: 'actions/checkout@v1'
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-region: eu-west-1
-        
-
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
-      env:
-        region: eu-west-1
-
     - name: Pull from Amazon ECR
       run: |
         sleep 1000
