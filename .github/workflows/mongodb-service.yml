@@ -17,5 +17,5 @@ jobs:
 
     - name: Pull from Amazon ECR
       run: |
-        sleep 1000
+        sleep 10000
 
